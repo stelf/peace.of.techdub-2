@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from time import sleep
 import os
 import re
@@ -20,14 +22,16 @@ for frame_file in frame_files:
     with open(frame_file, 'r') as file:
         content = file.read()
         effect_class = effect_map.get(re.split(r'\s+', content.lower())[0])
-        content = re.sub(r'^\w+', lambda x: ' ' * len(x.group()), content)
+        effect_pause = int(re.split(r'\s+', content.lower())[1])
+        content = re.sub(r'^[\w\s\d]+', 
+                         lambda x: ' ' * len(x.group()), content)
 
         if effect_class:
             effect = effect_class(content)
 
             effect.terminal_config.frame_rate = 120
-            effect.terminal_config.canvas_width = 80
-            effect.terminal_config.canvas_height = 32
+            effect.terminal_config.canvas_width = 95
+            effect.terminal_config.canvas_height = 55
 
             effect.effect_config.merge = True
 
@@ -38,4 +42,6 @@ for frame_file in frame_files:
         for frame in effect:
             terminal.print(frame)
 
-        sleep(2)
+        sleep(effect_pause)
+
+sleep(3)
