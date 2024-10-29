@@ -19,7 +19,7 @@ for frame_file in frame_files:
     # rest of the code
 
     effect_name = frame_file.split('_')[0]
-    with open(frame_file, 'r') as file:
+    with open(frame_file, 'r', encoding='utf-8') as file:
         content = file.read()
         effect_class = effect_map.get(re.split(r'\s+', content.lower())[0])
         effect_pause = int(re.split(r'\s+', content.lower())[1])
