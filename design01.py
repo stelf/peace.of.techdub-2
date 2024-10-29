@@ -16,14 +16,12 @@ frame_files = [f for f in os.listdir() if f.endswith('.txt')]
 frame_files.sort(key=lambda x: int(re.findall(r'\d+', x)[0]))
 
 for frame_file in frame_files:
-    # rest of the code
-
     effect_name = frame_file.split('_')[0]
     with open(frame_file, 'r', encoding='utf-8') as file:
         content = file.read()
         effect_class = effect_map.get(re.split(r'\s+', content.lower())[0])
         effect_pause = int(re.split(r'\s+', content.lower())[1])
-        content = re.sub(r'^[\w\s\d]+', 
+        content = re.sub(r'^\w+\s+\d+', 
                          lambda x: ' ' * len(x.group()), content)
 
         if effect_class:
