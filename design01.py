@@ -1,52 +1,55 @@
 #!/usr/bin/python3
 
+
+# fonts used:
+#
+# Render font is IBM Plex Mono
+# Rendered in alacritty
+# ASCII Fonts: DiamFont
+
 from time import sleep
 import os
 import re
-from functools import partial
+import random
 
 from terminaltexteffects.engine.terminal import Terminal
 from terminaltexteffects.effects import effect_rain, effect_beams, effect_middleout, effect_binarypath
 from terminaltexteffects.utils.graphics import Color
 from terminaltexteffects.utils.graphics import Gradient
 from terminaltexteffects.utils.easing import (
-    out_quad, out_cubic, in_out_quad, in_out_cubic, out_bounce
+    out_quad, out_cubic, in_out_quad
 )
 
-import random
-
-
-def pastel_cyberpunk_gradient(n):
-    return [(random.randint(128, 255), random.randint(128, 255), random.randint(128, 255)) for _ in range(n)]
-
 effect_map = {
+    'beams': lambda prompt_text:
+        (lambda effect: (
+            setattr(effect.effect_config, 'beam_gradient_stops', (Color("00ffff"), Color("ff00ff"))),
+            setattr(effect.effect_config, 'beam_gradient_steps', (4, 6, 10)),
+            setattr(effect.effect_config, 'final_gradient_stops', (Color("4080ff"), Color("aa40ff"), Color("FFFF55"))),
+            setattr(effect.effect_config, 'final_gradient_steps', (2,3,8)),
+            setattr(effect.effect_config, 'final_wipe_speed', 3),
+            effect
+        )[-1])(effect_beams.Beams(prompt_text)),
+
     'rain': lambda prompt_text: 
         (lambda effect: (
-            setattr(effect.effect_config, 'rain_colors', (Color("00ffff"), Color("00ff00"), Color("ff00ff"))),
-            setattr(effect.effect_config, 'rain_symbols', (".", ":", "|", "●")),
-            setattr(effect.effect_config, 'final_gradient_stops', (Color("0000ff"), Color("00ffff"), Color("ffffff"))),
-            setattr(effect.effect_config, 'final_gradient_steps', (15, 15)),
+            setattr(effect.effect_config, 'rain_colors', (Color("00ff88"), Color("eeff00"), Color("ff00ff"))),
+            setattr(effect.effect_config, 'rain_symbols', (".", ",", ":", "|", "*")),
+            setattr(effect.effect_config, 'final_gradient_stops', (Color("0044ff"), Color("00ffff"), Color("ffAAff"))),
+            setattr(effect.effect_config, 'final_gradient_steps', (15, 25, 2)),
             setattr(effect.effect_config, 'easing', out_quad),
             effect
         )[-1])(effect_rain.Rain(prompt_text)),
 
-    'beams': lambda prompt_text:
-        (lambda effect: (
-            setattr(effect.effect_config, 'beam_gradient_stops', (Color("00ffff"), Color("ff00ff"))),
-            setattr(effect.effect_config, 'beam_gradient_steps', (2, 10)),
-            setattr(effect.effect_config, 'final_gradient_stops', (Color("00ff00"), Color("0000ff"), Color("ff0000"))),
-            setattr(effect.effect_config, 'final_gradient_steps', (8, 10)),
-            setattr(effect.effect_config, 'final_wipe_speed', 2),
-            effect
-        )[-1])(effect_beams.Beams(prompt_text)),
+
     'middleout': lambda prompt_text:
         (lambda effect: (
             setattr(effect.effect_config, 'starting_color', Color("ffffff")),
             setattr(effect.effect_config, 'final_gradient_stops', (Color("ff00ff"), Color("00ffff"), Color("ffff00"))),
-            setattr(effect.effect_config, 'final_gradient_steps', (10, 20)),
+            setattr(effect.effect_config, 'final_gradient_steps', (10, 8, 20)),
             setattr(effect.effect_config, 'expand_direction', 'horizontal'),
-            setattr(effect.effect_config, 'center_movement_speed', 0.8),
-            setattr(effect.effect_config, 'full_movement_speed', 1.2),
+            setattr(effect.effect_config, 'center_movement_speed', 0.4),
+            setattr(effect.effect_config, 'full_movement_speed', 0.5),
             setattr(effect.effect_config, 'center_easing', out_cubic),
             setattr(effect.effect_config, 'full_easing', in_out_quad),
             effect
@@ -80,14 +83,16 @@ for frame_file in frame_files:
             effect = effect_class(content)
 
             effect.terminal_config.frame_rate = 120
-            effect.terminal_config.canvas_width = 95
+            effect.terminal_config.canvas_width = 96
             effect.terminal_config.canvas_height = 55
 
             effect.effect_config.merge = True
 
+
         # effect.terminal.move_cursor_to_top()
         # with effect.terminal_output() as terminal:
         terminal = Terminal(effect.input_data, effect.terminal_config)
+        terminal.prep_canvas()
         # terminal.move_cursor_to_top()
         for frame in effect:
             terminal.print(frame)
