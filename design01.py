@@ -1,11 +1,19 @@
 #!/usr/bin/python3
 
-
+# this is CC Sharealike Licence 4.0
+# 
+# based on the wonderful https://github.com/johnnyfreekanz/terminaltexteffects
 # fonts used:
 #
-# Render font is IBM Plex Mono
-# Rendered in alacritty
-# ASCII Fonts: DiamFont
+# Render font: is IBM Plex Mono
+# Rendered in alacritty, capture with windows screencapture
+# The result is processed with crt_royale and one of the slang shaders, but... i really don't remember which, and it was not used as lib.
+# The brightness is then corrected with crt_royale, cause CRT shaders are a bit dark on purpose
+# The result is muxed in avidemux with KANZ's track 'Luminal Spaces', and further cropped and retouched.
+#
+# ASCII Fonts: DiamFont, Crawford2, and perhaps another one I can't recall
+# from here 
+# https://patorjk.com/software/taag/#p=display&h=2&f=Crawford2&t=johnny%20%0A%20free%20d%0A%20%20kanz%20%0A%20%20pndi%20%0A%20%20kmn%0Aarkana
 
 from time import sleep
 import os
