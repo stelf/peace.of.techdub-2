@@ -1,4 +1,4 @@
-This is the source code for a short 90s intro-style ad for a music event taking place in [Sofia, Bulgaria](https://en.wikipedia.org/wiki/Sofia).
+This is the source code for a short 90s intro-style ad for a dubtechno (music) event taking place in [Sofia, Bulgaria](https://en.wikipedia.org/wiki/Sofia).
 
 The video is done with pipeline of tools. You can consult assets/export for the takes and the progress.
 
