@@ -11,6 +11,8 @@
 # The brightness is then corrected with crt_royale, cause CRT shaders are a bit dark on purpose
 # The result is muxed in avidemux with KANZ's track 'Luminal Spaces', and further cropped and retouched.
 #
+# https://www.asciiart.eu/image-to-ascii
+#
 # ASCII Fonts: DiamFont, Crawford2, and perhaps another one I can't recall
 # from here 
 # https://patorjk.com/software/taag/#p=display&h=2&f=Crawford2&t=johnny%20%0A%20free%20d%0A%20%20kanz%20%0A%20%20pndi%20%0A%20%20kmn%0Aarkana
